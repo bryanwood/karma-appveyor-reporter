@@ -16,7 +16,7 @@ var AppVeyorReporter = function (baseReporterDecorator, config, logger, helper, 
       request.post(baseUrl).send({
           testName:result.description,
           testFramework:"Karma",
-          fileName:result.suite,
+          fileName:browser.name,
           outcome:"Passed",
           durationMilliseconds:result.time
       }).end(function(err, res){
@@ -31,7 +31,7 @@ var AppVeyorReporter = function (baseReporterDecorator, config, logger, helper, 
       request.post(baseUrl).send({
           testName:result.description,
           testFramework:"Karma",
-          fileName:result.suite,
+          fileName:browser.name,
           outcome:"Skipped",
           durationMilliseconds:result.time
       }).end(function(err, res){
@@ -45,8 +45,8 @@ var AppVeyorReporter = function (baseReporterDecorator, config, logger, helper, 
       doneCount++;
       request.post(baseUrl).send({
           testName:result.description,
-          testFramework:"",
-          fileName:result.suite,
+          testFramework:"Karma",
+          fileName:browser.name,
           outcome:"Failed",
           durationMilliseconds:result.time,
           ErrorMessage:"",
