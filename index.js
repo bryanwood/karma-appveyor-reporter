@@ -4,6 +4,11 @@ var fs = require('fs')
 var request = require('superagent');
 
 var AppVeyorReporter = function (baseReporterDecorator, config, logger, helper, formatError) {
+  if (!process.env.APPVEYOR_API_URL) {
+    // Escape when we're not runnning on AppVeyor
+    return;
+  }
+  
   var log = logger.create('reporter.appveyor')
   var doneCount = 0;
   var doneCallback;
@@ -72,8 +77,6 @@ var AppVeyorReporter = function (baseReporterDecorator, config, logger, helper, 
 AppVeyorReporter.$inject = ['baseReporterDecorator', 'config', 'logger', 'helper', 'formatError']
 
 // PUBLISH DI MODULE
-if(process.env.APPVEYOR_API_URL) {
-  module.exports = {
-    'reporter:appveyor': ['type', AppVeyorReporter]
-  }
+module.exports = {
+  'reporter:appveyor': ['type', AppVeyorReporter]
 }
